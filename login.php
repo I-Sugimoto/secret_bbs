@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   $name = $_POST['name'];
   $email = $_POST['email'];
+  $count = $_POST['count'];
   $errors = array();
 
   // バリデーション
@@ -36,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":name", $name);
     $stmt->bindParam(":email", $email);
+    $stmt->bindParam("count", $count);
     $stmt->execute();
 
     $row = $stmt->fetch();

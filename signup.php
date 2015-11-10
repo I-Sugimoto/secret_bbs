@@ -22,11 +22,12 @@
    if (empty($errors))
   {
     $dbh = connectDatabase();
-    $sql = "insert into users (name, email, created_at) values
-           (:name, :email, now())";
+    $sql = "insert into users (name, email, count, created_at) values
+           (:name, :email, '5', now())";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":name", $name);
     $stmt->bindParam(":email", $email);
+    $stmt->bindParam('5', $count);
     $stmt->execute();
 
     // ログイン画面へ飛ばす

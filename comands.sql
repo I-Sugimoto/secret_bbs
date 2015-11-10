@@ -8,11 +8,12 @@ create table users(
   id int primary key auto_increment,
   name varchar (255),
   email varchar(255),
+  count varchar(255),
   created_at datetime);
 
 create table posts(
   id int primary key auto_increment,
   name varchar(255),
   message text,
-  create_at datetime,
+  created_at datetime,
   updated_at datetime);

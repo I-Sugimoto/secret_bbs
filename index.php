@@ -15,6 +15,7 @@ if (empty($_SESSION['id']))
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   $name = $_SESSION['name'];
+  $count = $_SESSION['count'];
   $message = $_POST['message'];
   $errors = array();
 
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   if (empty($errors))
   {
     $dbh = connectDatabase();
-    $sql = "insert into posts (name, message, create_at, updated_at) values
+    $sql = "insert into posts (name, message, created_at, updated_at) values
             (:name, :message, now(), now())";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":name", $name);
@@ -62,6 +63,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </head>
   <body>
     <h1><?php echo h($_SESSION['name']) ?>さん 会員制掲示版へようこそ！</h1>
+    <h2><?php echo h($_SESSION['name']) ?>さんは<?php echo h($_SESSION['count']) ?>回目のログインです</h2>
     <p><a href="logout.php">ログアウト</a></p>
     <p>一言どうぞ！</p>
     <form action="" method="post">

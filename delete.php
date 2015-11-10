@@ -19,10 +19,11 @@ require_once('functions.php');
     header('Location: index.php');
     exit;
     }
-
+    //deleteをわかりやすくするためにdeleteをつける。
     $sql_delete = "delete from posts where id = :id";
     $stmt_delete = $dbh->prepare($sql_delete);
     $stmt_delete->bindParam(":id", $id);
     $stmt_delete->execute();
+    
     header('Location: index.php');
     exit;
