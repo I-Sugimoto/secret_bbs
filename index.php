@@ -15,7 +15,6 @@ if (empty($_SESSION['id']))
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   $name = $_SESSION['name'];
-  $count = $_SESSION['count'];
   $message = $_POST['message'];
   $errors = array();
 
@@ -63,7 +62,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </head>
   <body>
     <h1><?php echo h($_SESSION['name']) ?>さん 会員制掲示版へようこそ！</h1>
-    <h2><?php echo h($_SESSION['name']) ?>さんは<?php echo h($_SESSION['count']) ?>回目のログインです</h2>
+    <h2><?php echo h($_SESSION['name']) ?>さんは<?php echo h($_SESSION['login_count']) ?>回目のログインです</h2>
     <p><a href="logout.php">ログアウト</a></p>
     <p>一言どうぞ！</p>
     <form action="" method="post">

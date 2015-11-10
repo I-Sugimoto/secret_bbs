@@ -37,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":name", $name);
     $stmt->bindParam(":email", $email);
-    $stmt->bindParam("count", $count);
     $stmt->execute();
 
     $row = $stmt->fetch();
@@ -45,8 +44,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     if ($row)
     {
+      // ログイン成功時の処理
+      $login_count = $row['login_count'] + 1;
+     
+
+      $sql_update = "update users set login_count = :login_count where id = :id";
+      $stmt=$dbh->prepare($sql_update);
+      $stmt->bindParam(":id", $row['id']);
+      $stmt->bindParam(":login_count", $login_count);
+      $stmt->execute();
+
+
+      
+      // セッションに login_count をもたせる	
       $_SESSION['id'] = $row['id'];
       $_SESSION['name'] = $row['name'];
+      $_SESSION['login_count'] = $login_count;
       header('Location: index.php');
       exit;
     }
@@ -59,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 ?>
 
 
-<!DOCKTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
    <meta charset="utf-8">
