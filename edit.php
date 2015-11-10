@@ -4,9 +4,9 @@
 require_once('config.php');
 require_once('functions.php');
 
-$id = $_GET['id'];
+    $id = $_GET['id'];
 
-$dbh = connectDatabase();
+    $dbh = connectDatabase();
     $sql = "select * from posts where id = :id";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":id", $id);
@@ -19,7 +19,37 @@ $dbh = connectDatabase();
     header('Location: index.php');
     exit;
     }
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+  $message = $_POST['message'];
+  $errors = array();
+
+  // バリデーション
+  if ($message == '')
+  {
+    $errors['message'] = 'メッセージが未入力です';
+  }
+
+  // バリデーション突破後
+  if (empty($errors))
+  {
+    $dbh = connectDatabase();
+    $sql = "update posts set message = :message, updated_at = now() where id = :id";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":message", $message);
+    $stmt->execute();
     
+    //indexに戻る
+    header('Location: index.php');
+    exit;
+
+  }
+
+
+}    
 
 
 ?>
@@ -39,7 +69,7 @@ $dbh = connectDatabase();
         <?php if ($errors['message']) : ?>
           <?php echo h($errors['message']) ?>
         <?php endif ?>
-      <input type="submit" value="投稿する">
+      <input type="submit" value="編集する">
     </form>
     
   </body>
