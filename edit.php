@@ -1,3 +1,9 @@
+<?php
+
+echo $_GET['id'];
+
+?>
+
 <!DOCTYPE html>
 <html>
   <head>

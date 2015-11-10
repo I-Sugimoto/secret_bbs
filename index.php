@@ -51,7 +51,7 @@ $stmt->execute();
 
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump($posts);
+// var_dump($posts);
 
 ?>
 <!DOCTYPE html>
@@ -75,10 +75,11 @@ var_dump($posts);
     <h1>投稿されたメッセージ</h1>
     <?php if (count($posts)) : ?>
       <?php foreach ($posts as $post) : ?>
-        <li>
+        <li style="list-style-type: none;">
           [#<?php echo h($post['id']) ?>]
           @<?php echo h($post['name']) ?><br>
           <?php echo h($post['message']) ?><br>
+          <a href="edit.php?id=<?php echo h($post['id']) ?>">[編集]</a>
           <?php echo h($post['updated_at']) ?>
           <hr>
         </li>
