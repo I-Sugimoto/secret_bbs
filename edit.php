@@ -1,6 +1,26 @@
 <?php
 
-echo $_GET['id'];
+// echo $_GET['id'];
+require_once('config.php');
+require_once('functions.php');
+
+$id = $_GET['id'];
+
+$dbh = connectDatabase();
+    $sql = "select * from posts where id = :id";
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(":id", $id);
+    $stmt->execute();
+    
+    $row = $stmt->fetch();
+
+    if (!$row) {
+      //indexに戻る
+    header('Location: index.php');
+    exit;
+    }
+    
+
 
 ?>
 
@@ -15,7 +35,7 @@ echo $_GET['id'];
     <p><a href="index.php">戻る</a></p>
     <p>一言どうぞ！</p>
     <form action="" method="post">
-      <textarea name="message" cols="30" rows="5"></textarea>
+      <textarea name="message" cols="30" rows="5"><?php echo h($row['message']) ?></textarea>
         <?php if ($errors['message']) : ?>
           <?php echo h($errors['message']) ?>
         <?php endif ?>
