@@ -80,6 +80,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
           @<?php echo h($post['name']) ?><br>
           <?php echo h($post['message']) ?><br>
           <a href="edit.php?id=<?php echo h($post['id']) ?>">[編集]</a>
+          <a href="delete.php?id=<?php echo h($post['id']) ?>">[削除]</a>
           <?php echo h($post['updated_at']) ?>
           <hr>
         </li>
