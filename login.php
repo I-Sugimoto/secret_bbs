@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <head>
    <meta charset="utf-8">
     <title>ログイン画面</title>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <h1>ログイン</h1>
@@ -98,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
           <?php echo h($errors['email']) ?>
         <?php endif ?>
       </p>
-    <input type="submit" value="ログイン">
+    <input class="btn" type="submit" value="ログイン">
     </form>
     <a href="signup.php">新規登録はこちら!</a>
   </body>

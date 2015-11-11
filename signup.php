@@ -41,6 +41,7 @@
   <head>
    <meta charset="utf-8">
     <title>新規登録画面</title>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <h1>新規登録</h1>
@@ -57,7 +58,7 @@
           <?php echo h($errors['email']) ?>
         <?php endif ?>
     </p>
-    <input type="submit" value="登録する">
+    <input class="btn" type="submit" value="登録する">
     </form>
     <a href="login.php">ログイン画面へ</a>
   </body>

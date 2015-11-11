@@ -71,6 +71,7 @@ print_r($sum);
   <head>
     <meta charset="utf-8">
     <title>会員制掲示版</title>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <h1><?php echo h($_SESSION['name']) ?>さん 会員制掲示版へようこそ！</h1>
@@ -83,7 +84,7 @@ print_r($sum);
         <?php if ($errors['message']) : ?>
           <?php echo h($errors['message']) ?>
         <?php endif ?>
-      <input type="submit" value="投稿する">
+      <input class="btn" type="submit" value="投稿する">
     </form>
     <hr>
     <h1>投稿されたメッセージ</h1>
