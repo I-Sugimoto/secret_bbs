@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <h1>ログイン</h1>
     <form action="" method="post">
     <p>
-        ユーザーネーム: <input type="password" name="name">
+        ユーザーネーム: <input type="text" name="name">
         <?php if ($errors['name']) : ?>
           <?php echo h($errors['name']) ?>
         <?php endif ?>
