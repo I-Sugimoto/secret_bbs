@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   // バリデーション突破後
   if (empty($errors))
   {
-    $dbh = connectDatabase();
+    $dbh = connectDatabase();//dbhは一度呼び出せば大丈夫。
     $sql = "select * from users where name = :name and email = :email";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":name", $name);
@@ -49,17 +49,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
      
 
       $sql_update = "update users set login_count = :login_count where id = :id";
-      $stmt=$dbh->prepare($sql_update);
+      $stmt = $dbh->prepare($sql_update);
       $stmt->bindParam(":id", $row['id']);
       $stmt->bindParam(":login_count", $login_count);
       $stmt->execute();
+      
+      //login_countの和を計算することで、ログインの総和を求める。
+      $login_sum = $row['login_count']; 
+
+      $sql_sum = "select sum($login_sum) from users";
+      $stmt = $dbh->prepare($sql_sum);
+      $stmt->execute();
+    
+    
 
 
       
-      // セッションに login_count をもたせる	
+      // セッションに login_count をもたせる。
+      //セッションにlogin_sumをもたせる。	
       $_SESSION['id'] = $row['id'];
       $_SESSION['name'] = $row['name'];
       $_SESSION['login_count'] = $login_count;
+      $_SESSION['login_sum'] = $login_sum;
       header('Location: index.php');
       exit;
     }
@@ -82,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <h1>ログイン</h1>
     <form action="" method="post">
     <p>
-        ユーザーネーム: <input type="text" name="name">
+        ユーザーネーム: <input type="password" name="name">
         <?php if ($errors['name']) : ?>
           <?php echo h($errors['name']) ?>
         <?php endif ?>
       </p>
       <p>
-        メールアドレス: <input type="text" name="email">
+        メールアドレス: <input type="password" name="email">
         <?php if ($errors['email']) : ?>
           <?php echo h($errors['email']) ?>
         <?php endif ?>

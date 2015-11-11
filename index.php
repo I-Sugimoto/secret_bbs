@@ -63,6 +63,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <body>
     <h1><?php echo h($_SESSION['name']) ?>さん 会員制掲示版へようこそ！</h1>
     <h2><?php echo h($_SESSION['name']) ?>さんは<?php echo h($_SESSION['login_count']) ?>回目のログインです</h2>
+    <h2>この掲示板はこれまで<?php echo h($_SESSION['login_sum']) ?>回ログインされています</h2>
     <p><a href="logout.php">ログアウト</a></p>
     <p>一言どうぞ！</p>
     <form action="" method="post">
