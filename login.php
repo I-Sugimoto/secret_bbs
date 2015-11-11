@@ -54,23 +54,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       $stmt->bindParam(":login_count", $login_count);
       $stmt->execute();
       
-      //login_countの和を計算することで、ログインの総和を求める。
-      $login_sum = $row['login_count']; 
-
-      $sql_sum = "select sum($login_sum) from users";
-      $stmt = $dbh->prepare($sql_sum);
-      $stmt->execute();
+      
     
     
 
 
       
       // セッションに login_count をもたせる。
-      //セッションにlogin_sumをもたせる。	
+      
       $_SESSION['id'] = $row['id'];
       $_SESSION['name'] = $row['name'];
       $_SESSION['login_count'] = $login_count;
-      $_SESSION['login_sum'] = $login_sum;
       header('Location: index.php');
       exit;
     }
