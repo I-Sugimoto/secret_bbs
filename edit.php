@@ -4,12 +4,28 @@
 require_once('config.php');
 require_once('functions.php');
 
-    $id = $_GET['id'];
+    session_start();
+    $post_id = $_GET['post_id'];// メッセージのid 
+    $user_id = $_GET['user_id'];// メッセージが持つ user_id
+    $id = $_SESSION['id'];      // ログインユーザのID 
+    var_dump($post_id);
+    var_dump($user_id);
+    var_dump($id);
+    // exit;
+
+    // if(ログインユーザのID != メッセージが持つuser_id) {
+    //   header('Location : index.php');
+    //   exit;
+    // }
+    if($id != $user_id) {
+      header('Location: index.php');
+      exit;
+    }
 
     $dbh = connectDatabase();
     $sql = "select * from posts where id = :id";
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":id", $post_id);
     $stmt->execute();
     
     $row = $stmt->fetch();
@@ -38,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $dbh = connectDatabase();
     $sql = "update posts set message = :message, updated_at = now() where id = :id";
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":id", $post_id);
     $stmt->bindParam(":message", $message);
     $stmt->execute();
     

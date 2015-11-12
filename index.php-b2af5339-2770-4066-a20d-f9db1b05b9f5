@@ -11,7 +11,6 @@ if (empty($_SESSION['id']))
   exit;
 }
 
-echo h($post_id['id'] = $_GET['id'] && $user_id = $_SESSION['id']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -30,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
     $dbh = connectDatabase();
     $sql = "insert into posts (name, message, created_at, updated_at, user_id) values
-            (:name, :message, now(), now(), :user_id)";
+            (:name, :message, now(), now(), :id)";
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(":name", $name);
     $stmt->bindParam(":message", $message);
@@ -96,9 +95,8 @@ $login_count = $stmt->fetch(PDO::FETCH_ASSOC);
           [#<?php echo h($post['id']) ?>]
           @<?php echo h($post['name']) ?><br>
           <?php echo h($post['message']) ?><br>
-          <!-- <a href="edit.php?id=<?php echo h($post_id['id'] = $_GET['id'] && $user_id = $_SESSION['id']) ?>">[編集]</a> -->
-          <a href="edit.php?post_id=<?php echo h($post['id']) ?>&user_id=<?php echo h($post['user_id']) ?>">[編集]222222222</a>
-          <a href="delete.php?id=<?php echo h($post['id']) ?>&name=<?php echo h($post['name']) ?>">[削除]</a>
+          <a href="edit.php?id=<?php echo h($post_id['id'] = $_GET['id'] && $user_id = $_SESSION['id']) ?>">[編集]</a>
+          <a href="delete.php?id=<?php echo h(($post_id['id'] = $_GET['id'] && $user_id = $_SESSION['id']) ?>">[削除]</a>
           <?php echo h($post['updated_at']) ?>
           <hr>
         </li>
