@@ -5,6 +5,7 @@ require_once('config.php');
 require_once('functions.php');
 
     session_start();
+    // これがないと$_SESSIONが値をとらない。大切。
     $post_id = $_GET['post_id'];// メッセージのid 
     $user_id = $_GET['user_id'];// メッセージが持つ user_id
     $id = $_SESSION['id'];      // ログインユーザのID 
@@ -25,7 +26,7 @@ require_once('functions.php');
     $dbh = connectDatabase();
     $sql = "select * from posts where id = :id";
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(":id", $post_id);
+    $stmt->bindParam(":id", $id);
     $stmt->execute();
     
     $row = $stmt->fetch();
@@ -54,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $dbh = connectDatabase();
     $sql = "update posts set message = :message, updated_at = now() where id = :id";
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(":id", $post_id);
+    $stmt->bindParam(":id", $id);
     $stmt->bindParam(":message", $message);
     $stmt->execute();
     
